@@ -1,0 +1,32 @@
+2023-01-13 17:33:54 Produced message on topic user-tracker with value of {"branch_id": 20, "branch_name": "GOLD PIZZA", "topping": ["Bacon", "Onions", "Sausage", "Mushrooms", "Pepperoni", "Extra Cheese"], "status": "completed"}
+
+2023-01-13 17:33:58 Produced message on topic user-tracker with value of {"branch_id": 22, "branch_name": "GOLD PIZZA", "topping": ["Extra Cheese"], "status": "completed"}
+
+2023-01-13 17:34:02 Produced message on topic user-tracker with value of {"branch_id": 24, "branch_name": "GOLD PIZZA", "topping": ["Onions", "Bacon", "Extra Cheese", "Sausage"], "status": "completed"}
+
+2023-01-13 17:34:06 Produced message on topic user-tracker with value of {"branch_id": 7, "branch_name": "GOLD PIZZA", "topping": ["Pepperoni", "Sausage", "Bacon", "Onions"], "status": "completed"}
+
+2023-01-13 17:34:10 Produced message on topic user-tracker with value of {"branch_id": 30, "branch_name": "GOLD PIZZA", "topping": ["Onions", "Sausage", "Extra Cheese", "Bacon", "Pepperoni", "Mushrooms"], "status": "completed"}
+
+2023-01-13 17:34:14 Produced message on topic user-tracker with value of {"branch_id": 16, "branch_name": "GOLD PIZZA", "topping": ["Bacon", "Sausage", "Onions"], "status": "completed"}
+
+2023-01-13 17:34:18 Produced message on topic user-tracker with value of {"branch_id": 21, "branch_name": "GOLD PIZZA", "topping": ["Extra Cheese", "Bacon", "Mushrooms", "Onions", "Sausage", "Pepperoni"], "status": "completed"}
+
+2023-01-13 17:34:22 Produced message on topic user-tracker with value of {"branch_id": 19, "branch_name": "GOLD PIZZA", "topping": ["Sausage"], "status": "completed"}
+
+2023-01-13 17:34:26 Produced message on topic user-tracker with value of {"branch_id": 22, "branch_name": "GOLD PIZZA", "topping": ["Extra Cheese"], "status": "completed"}
+
+2023-01-13 17:34:30 Produced message on topic user-tracker with value of {"branch_id": 8, "branch_name": "GOLD PIZZA", "topping": ["Pepperoni", "Onions"], "status": "completed"}
+
+2023-01-13 17:34:34 Produced message on topic user-tracker with value of {"branch_id": 8, "branch_name": "GOLD PIZZA", "topping": ["Mushrooms", "Onions", "Extra Cheese", "Sausage", "Bacon"], "status": "completed"}
+
+2023-01-13 17:34:38 Produced message on topic user-tracker with value of {"branch_id": 13, "branch_name": "GOLD PIZZA", "topping": ["Mushrooms", "Onions"], "status": "completed"}
+
+2023-01-13 17:34:42 Produced message on topic user-tracker with value of {"branch_id": 27, "branch_name": "GOLD PIZZA", "topping": ["Extra Cheese", "Pepperoni", "Mushrooms", "Sausage"], "status": "completed"}
+
+2023-01-13 17:34:46 Produced message on topic user-tracker with value of {"branch_id": 14, "branch_name": "GOLD PIZZA", "topping": ["Onions", "Sausage", "Pepperoni", "Extra Cheese", "Mushrooms"], "status": "completed"}
+
+2023-01-13 17:34:50 Produced message on topic user-tracker with value of {"branch_id": 22, "branch_name": "GOLD PIZZA", "topping": ["Mushrooms", "Onions", "Pepperoni", "Extra Cheese", "Sausage", "Bacon"], "status": "completed"}
+
+2023-01-13 17:34:54 Produced message on topic user-tracker with value of {"branch_id": 23, "branch_name": "GOLD PIZZA", "topping": ["Extra Cheese", "Onions", "Pepperoni", "Bacon"], "status": "completed"}
+
