@@ -1,7 +1,7 @@
 # pizza_simulator
 #### A simulator will generate transaction data for orders and branch opening/closing events. The simulator generates a pizza order with a tip and including the order time, in which branch.After a random time interval the simulator will report that the order is complete.
  ## HOW TO RUN 
- 1. clone the progect .
+ 1. clone the project .
  2. install docker-compose on your environment.
  3. enter to the project directory and write in terninal the command "docker-compose up -d"
  4. now the zookeeper and broker are running . 
