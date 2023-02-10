@@ -21,14 +21,19 @@ logging.basicConfig(format='%(asctime)s %(message)s',
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
+conf = {
+    'bootstrap.servers': 'localhost:9092', # Replace with the address and port of your Kafka broker
+    'client.id': 'python-producer'
+}
 
+def delivery_report(err, msg):
+    if err is not None:
+        print('Message delivery failed: {}'.format(err))
+    else:
+        print('Message delivered to {} [{}]'.format(msg.topic(), msg.partition()))
 
-'''
-create the producer by specifying the port of your Kafka cluster
-'''
-p=Producer({'bootstrap.servers':'localhost:9092'})
+producer = Producer(conf)
 
-#####################
 '''
 Define a callback function that takes care of acknowledging new messages or errors
 '''
@@ -99,12 +104,37 @@ def simulate_pizza_order():
            'status': order.status 
            }
         m=json.dumps(data)
-        p.poll(1)
-        p.produce('user-tracker',m.encode('utf-8'),callback=receipt)
-        p.flush()
+        producer.poll(1)
+        producer.produce('test-topic', m.encode('utf-8')  , callback=delivery_report)
+        producer.flush()
         time.sleep(3)
 
 
         
 if __name__ == '__main__':
     simulate_pizza_order()
+
+# from confluent_kafka import Producer
+
+# conf = {
+#     'bootstrap.servers': 'localhost:9092', # Replace with the address and port of your Kafka broker
+#     'client.id': 'python-producer'
+# }
+
+# def delivery_report(err, msg):
+#     if err is not None:
+#         print('Message delivery failed: {}'.format(err))
+#     else:
+#         print('Message delivered to {} [{}]'.format(msg.topic(), msg.partition()))
+
+# # Create the Kafka producer instance
+# producer = Producer(conf)
+
+# # Produce a message to the topic
+# topic = 'test-topic' # Replace with the name of your topic
+# data = {'Hello' : 'Kafka'} # The message you want to send
+# m= json.dumps(data)
+# producer.produce(topic, m.encode('utf-8')  , callback=delivery_report)
+
+# # Wait for any outstanding messages to be delivered and delivery report callbacks to be received
+# producer.flush()

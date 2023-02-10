@@ -1,41 +1,71 @@
 # pizza_simulator
-#### A simulator will generate transaction data for orders and branch opening/closing events. The simulator generates a pizza order with a tip and including the order time, in which branch.After a random time interval the simulator will report that the order is complete.
- ## HOW TO RUN 
- 1. clone the project .
- 2. install docker-compose on your environment.
- 3. enter to the project directory and write in terninal the command "docker-compose up -d"
- 4. now the zookeeper and broker are running . 
- 5. run the producer.py file. 
- 6. need to change - explain how to start the connector of mongoDB and ElasticSearch for consuming the data from kafka broker.
- 
-#### to install confluent 
-curl -O http://packages.confluent.io/archive/6.1/confluent-6.1.1.tar.gz
-tar zxf confluent-6.1.1.tar.gz 
-vi ~/.bashrc
+#### A simulator will generate transaction data for orders and branch opening/closing events. 
+#### The simulator generates a pizza order with a tip and including the order time, in which branch.
+#### After a random time interval the simulator will report that the order is complete.
 
-## check the connection string - mongodb
+## prerequisets:
+* `python3.8`     
+* `docker-compose`
+
+### windows
+```bash
+powershell
+docker-compose
+```
+
+### mac / linux
+```bash
+docker-compose
+```
+
+## secrets
+export your env var:      
+```bash
+MONGO_NAME=
+MONGO_PASSWORD=
+```
+
+### Docker CLI Important  Commands
+* docker-compose up -d
+* docker stop <container-id>
+* docker rmi -f $(docker images -aq)
+* docker logs -f <container-name>
+* docker exec -it <container-name> bash
+* docker-compose down
+* docker restart my_container
+
+### kafka-broker cli commands
+* kafka-console-producer --topic test-topic --bootstrap-server localhost:9092
+* kafka-topics --bootstrap-server localhost:9092 --list
+* kafka-topics --bootstrap-server localhost:9092 --delete --topic test-topic
+* kafka-topics --bootstrap-server localhost:9092 --topic test-topic --create --partitions 3 --replication-factor 1
+* kafka-console-consumer --topic test-topic --from-beginning --bootstrap-server localhost:9092
+
+### cli commmands to connectors 
+* curl -X GET http://connect:8083/connectors
+* curl -X DELETE http://connect:8083/connectors/mongo-haim-sink
+
+### check the connection string - mongodb
 * mongo "mongodb+srv://HAIM:261197@pizzacluster.8pd4dbj.mongodb.net/test"
+ 
+### start the mongoDB connector
 
-## kafka commands
-#### Kafka cluster URL to list all topics
-*  bin/kafka-topics.sh --bootstrap-server=localhost:9092 --list
-#### –list option to display a list of all the topics in the Kafka cluster
-* bin/kafka-topics.sh --list --zookeeper localhost:2181
-#### to view metadata about the topics in your Kafka cluster.
-* bin/kafka-topics.sh --bootstrap-server=localhost:9092 --describe --topic <topic-name>
-#### to start to connector between kafka to mongoDB
+curl -X POST \
+     -H "Content-Type: application/json" \
+     --data '
+     {"name": "mongo-haim-sink",
+      "config": {
+         "connector.class":"com.mongodb.kafka.connect.MongoSinkConnector",
+         "connection.uri":"mongodb+srv://{ask-haim}:{ask-haim}@pizzacluster.8pd4dbj.mongodb.net/?retryWrites=true&w=majority",
+         "database":"pizza",
+         "collection":"final-test",
+         "topics":"test-topic",
+         "schemas.enable": "false"
+         }
+     }
+     ' \
+     http://connect:8083/connectors -w "\n"
 
-$ curl -X PUT http://localhost:9092/connectors/sink-mongodb-users/config -H "Content-Type: application/json" -d ' {
-      "connector.class":"com.mongodb.kafka.connect.MongoSinkConnector",
-      "tasks.max":"1",
-      "topics":"user-tracker",
-      "connection.uri":mongodb+srv://HAIM:261197@pizzacluster.8pd4dbj.mongodb.net/test,
-      "database":"BigBoxStore",
-      "collection":"orders",
-      "key.converter":"org.apache.kafka.connect.json.JsonConverter",
-      "key.converter.schemas.enable":false,
-      "value.converter":"org.apache.kafka.connect.json.JsonConverter",
-      "value.converter.schemas.enable":false
-}' 
+
 
 
