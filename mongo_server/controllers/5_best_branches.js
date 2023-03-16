@@ -11,7 +11,7 @@ const handleBestBranches = async (req, res, client) => {
         },
         {
           $group: {
-            _id: "$branch_id",
+            _id: "$region",
             totalOrders: { $sum: 1 },
           },
         },

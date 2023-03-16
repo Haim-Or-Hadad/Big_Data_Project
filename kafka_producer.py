@@ -135,7 +135,8 @@ def simulate_pizza_order():
             'topping': order.toppings ,
             'order_date' : date,
             'order_time' : time_only_str, 
-            'status': order.status 
+            'status': order.status ,
+            'region': order.region
             }
             m=json.dumps(data)
             producer.poll(1)

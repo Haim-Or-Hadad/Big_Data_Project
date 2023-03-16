@@ -1,12 +1,22 @@
-import { useCallback, useMemo, useState,useEffect } from 'react';
 import Head from 'next/head';
-import { subDays, subHours } from 'date-fns';
-import { Box, Button, Container, Stack, SvgIcon, Typography } from '@mui/material';
-import { useSelection } from 'src/hooks/use-selection';
+import ArrowUpOnSquareIcon from '@heroicons/react/24/solid/ArrowUpOnSquareIcon';
+import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
+import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
+import {
+  Box,
+  Button,
+  Container,
+  Pagination,
+  Stack,
+  SvgIcon,
+  Typography,
+  Unstable_Grid2 as Grid
+} from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import { CustomersTable } from 'src/sections/customer/customers-table';
-import { CustomersSearch } from 'src/sections/customer/customers-search';
+import { BigMLTable } from 'src/sections/companies/bigML-table';
+import { useCallback, useMemo, useState,useEffect } from 'react';
 import { applyPagination } from 'src/utils/apply-pagination';
+import { useSelection } from 'src/hooks/use-selection';
 
 const now = new Date();
 
@@ -20,7 +30,6 @@ const data = [
       street: '4158  Hedge Street'
     },
     avatar: '/assets/avatars/avatar-anika-visser.png',
-    createdAt: subDays(subHours(now, 11), 2).getTime(),
     email: 'goldlmilan@gmail.com',
     name: 'Ilan Gold',
     phone: '908-691-3242'
@@ -47,12 +56,11 @@ const useCustomerIds = (customers) => {
 
 const Page = () => {
   const [page, setPage] = useState(0);
-  const [searchQuery, setSearchQuery] = useState({start: '',end:''});
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const customers = useCustomers(page, rowsPerPage);
   const customersIds = useCustomerIds(customers);
   const customersSelection = useSelection(customersIds);
-  const [orders, setOrders] = useState([]);
+  const [ml, setMl] = useState([]);
 
 
   const handlePageChange = useCallback(
@@ -69,12 +77,13 @@ const Page = () => {
     []
   );
 
-  const handleSearch = useCallback(() => {
-    fetch(`http://localhost:3313/orders/?start=${searchQuery.start}&end=${searchQuery.end}`)
+  const handleAnalyze = useCallback(() => {
+    fetch(`http://localhost:3100/predict`)
       .then(response => response.json())
-      .then(data => setOrders(data)).then(console.log(orders))
+      .then(data => setMl(data)).then(console.log(ml))
       .catch(error => console.error(error));
-  }, [searchQuery]);
+  });
+
 
 
   return (
@@ -100,20 +109,19 @@ const Page = () => {
             >
               <Stack spacing={1}>
                 <Typography variant="h4">
-                Orders Search
+                Analyze Orders
                 </Typography>
               </Stack>
             </Stack>
-            <CustomersSearch searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
             <Button
-                onClick={handleSearch}
+                onClick={handleAnalyze}
                 variant="contained"
               >
-                Search
+                Analyze
               </Button>
-            <CustomersTable
+            <BigMLTable
               count={data.length}
-              items={orders}
+              items={ml}
               onDeselectAll={customersSelection.handleDeselectAll}
               onDeselectOne={customersSelection.handleDeselectOne}
               onPageChange={handlePageChange}

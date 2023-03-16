@@ -17,7 +17,7 @@ import {
 import { Scrollbar } from 'src/components/scrollbar';
 import { getInitials } from 'src/utils/get-initials';
 
-export const CustomersTable = (props) => {
+export const SearchTable = (props) => {
   const {
     count = 0,
     items = [],
@@ -56,31 +56,34 @@ export const CustomersTable = (props) => {
                   />
                 </TableCell>
                 <TableCell>
-                  Name
+                  Order Date
                 </TableCell>
                 <TableCell>
-                  Email
+                  Brunch Id
                 </TableCell>
                 <TableCell>
-                  Location
+                  Start Time
                 </TableCell>
                 <TableCell>
-                  Phone
+                  End Time
                 </TableCell>
                 <TableCell>
-                  Signed Up
+                  Status
+                </TableCell>
+                <TableCell>
+                  Toppings
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {items.map((customer) => {
-                const isSelected = selected.includes(customer.id);
-                const createdAt = format(customer.createdAt, 'dd/MM/yyyy');
+            {items.filter(order => order.status === "completed").map((order) => {
+                const isSelected = selected.includes(order.id);
+                // const createdAt = format(order.order_date, 'dd/MM/yyyy');
 
                 return (
                   <TableRow
                     hover
-                    key={customer.id}
+                    key={order.id}
                     selected={isSelected}
                   >
                     <TableCell padding="checkbox">
@@ -88,9 +91,9 @@ export const CustomersTable = (props) => {
                         checked={isSelected}
                         onChange={(event) => {
                           if (event.target.checked) {
-                            onSelectOne?.(customer.id);
+                            onSelectOne?.(order.id);
                           } else {
-                            onDeselectOne?.(customer.id);
+                            onDeselectOne?.(order.id);
                           }
                         }}
                       />
@@ -101,25 +104,22 @@ export const CustomersTable = (props) => {
                         direction="row"
                         spacing={2}
                       >
-                        <Avatar src={customer.avatar}>
-                          {getInitials(customer.name)}
-                        </Avatar>
                         <Typography variant="subtitle2">
-                          {customer.name}
+                          {order.order_date}
                         </Typography>
                       </Stack>
                     </TableCell>
                     <TableCell>
-                      {customer.email}
+                      {order.branch_id}
                     </TableCell>
                     <TableCell>
-                      {customer.address.city}, {customer.address.state}, {customer.address.country}
+                    {order.order_time}
                     </TableCell>
                     <TableCell>
-                      {customer.phone}
+                      {order.status}
                     </TableCell>
                     <TableCell>
-                      {createdAt}
+                    {order.branch_name}
                     </TableCell>
                   </TableRow>
                 );
@@ -141,7 +141,7 @@ export const CustomersTable = (props) => {
   );
 };
 
-CustomersTable.propTypes = {
+SearchTable.propTypes = {
   count: PropTypes.number,
   items: PropTypes.array,
   onDeselectAll: PropTypes.func,

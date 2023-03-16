@@ -16,8 +16,9 @@ import {
 } from '@mui/material';
 import { Scrollbar } from 'src/components/scrollbar';
 import { getInitials } from 'src/utils/get-initials';
-
-export const CustomersTable = (props) => {
+import { useState } from 'react';
+const Toppings =["Pepperoni", "Mushrooms", "Onions", "Sausage", "Bacon", "Extra Cheese"]
+export const BigMLTable = (props) => {
   const {
     count = 0,
     items = [],
@@ -31,7 +32,6 @@ export const CustomersTable = (props) => {
     rowsPerPage = 0,
     selected = []
   } = props;
-
   const selectedSome = (selected.length > 0) && (selected.length < items.length);
   const selectedAll = (items.length > 0) && (selected.length === items.length);
 
@@ -46,56 +46,47 @@ export const CustomersTable = (props) => {
                   <Checkbox
                     checked={selectedAll}
                     indeterminate={selectedSome}
-                    onChange={(event) => {
-                      if (event.target.checked) {
-                        onSelectAll?.();
-                      } else {
-                        onDeselectAll?.();
-                      }
-                    }}
                   />
                 </TableCell>
                 <TableCell>
-                  Order Date
+                  Antecedent
                 </TableCell>
                 <TableCell>
-                  Brunch Id
+                  Consequent
                 </TableCell>
                 <TableCell>
-                  Start Time
+                  Support(%)
                 </TableCell>
                 <TableCell>
-                  End Time
-                </TableCell>
-                <TableCell>
-                  Status
-                </TableCell>
-                <TableCell>
-                  Toppings
+                  Coverage(%)
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-            {items.filter(order => order.status === "completed").map((order) => {
-                const isSelected = selected.includes(order.id);
-                // const createdAt = format(order.order_date, 'dd/MM/yyyy');
-
+              {items.map((data) => {
+                const antecedentIndex = Math.floor(Math.random() * Toppings.length);
+                const antecedent = Toppings[antecedentIndex];
+                
+                // Generate a random index value for data.consequent
+                let consequentIndex = Math.floor(Math.random() * Toppings.length);
+                let consequent = Toppings[consequentIndex];
+                
+                // Keep generating a new random index value for consequent until it is not the same as antecedent
+                while (consequentIndex === antecedentIndex) {
+                  consequentIndex = Math.floor(Math.random() * Toppings.length);
+                  consequent = Toppings[consequentIndex];
+                }
+                let id = Math.random().toString(36).substring(7);
+                const isSelected = selected.includes(id);
                 return (
                   <TableRow
                     hover
-                    key={order.id}
+                    key={id}
                     selected={isSelected}
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
                         checked={isSelected}
-                        onChange={(event) => {
-                          if (event.target.checked) {
-                            onSelectOne?.(order.id);
-                          } else {
-                            onDeselectOne?.(order.id);
-                          }
-                        }}
                       />
                     </TableCell>
                     <TableCell>
@@ -105,25 +96,23 @@ export const CustomersTable = (props) => {
                         spacing={2}
                       >
                         <Typography variant="subtitle2">
-                          {order.order_date}
+                          {antecedent}
                         </Typography>
                       </Stack>
                     </TableCell>
                     <TableCell>
-                      {order.branch_id}
+                      {consequent}
                     </TableCell>
                     <TableCell>
-                    {order.order_time}
+                      {data.support}
                     </TableCell>
                     <TableCell>
-                      {order.status}
-                    </TableCell>
-                    <TableCell>
-                    {order.branch_name}
+                      {data.coverage}
                     </TableCell>
                   </TableRow>
                 );
-              })}
+              })
+              }
             </TableBody>
           </Table>
         </Box>
@@ -141,7 +130,7 @@ export const CustomersTable = (props) => {
   );
 };
 
-CustomersTable.propTypes = {
+BigMLTable.propTypes = {
   count: PropTypes.number,
   items: PropTypes.array,
   onDeselectAll: PropTypes.func,
