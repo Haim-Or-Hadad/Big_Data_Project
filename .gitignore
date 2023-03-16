@@ -2,3 +2,4 @@ producer.log
 /Pizza-Dashboard/node_modules
 /elastic_server/node_modules
 /bigml_server/node_modules
+/mongo_server/node_modules
