@@ -1,11 +1,27 @@
 import PropTypes from 'prop-types';
 import ArrowDownIcon from '@heroicons/react/24/solid/ArrowDownIcon';
 import ArrowUpIcon from '@heroicons/react/24/solid/ArrowUpIcon';
-import UsersIcon from '@heroicons/react/24/solid/UsersIcon';
 import { Avatar, Card, CardContent, Stack, SvgIcon, Typography } from '@mui/material';
+import { useState, useEffect, useCallback } from 'react';
+import CurrencyDollarIcon from '@heroicons/react/24/solid/CurrencyDollarIcon';
 
-export const OverviewTotalCustomers = (props) => {
+
+export const OverviewTotalOrders = (props) => {
   const { difference, positive = false, sx, value } = props;
+  const [mongoValue, setMongoValue] = useState(3);
+  const getAllOrder = useCallback(() => {
+    fetch(`http://localhost:3005/count`)
+      .then(response => response.json())
+      .then(data => {
+        const mongoValue = Number(data.count);
+        setMongoValue(mongoValue);
+      })
+      .catch(error => console.error(error));
+  }, []);
+
+  useEffect(() => {
+    getAllOrder();
+  }, [getAllOrder]);
 
   return (
     <Card sx={sx}>
@@ -21,10 +37,10 @@ export const OverviewTotalCustomers = (props) => {
               color="text.secondary"
               variant="overline"
             >
-              Total Customers
+              Total Orders
             </Typography>
             <Typography variant="h4">
-              {value}
+              {mongoValue}
             </Typography>
           </Stack>
           <Avatar
@@ -35,7 +51,7 @@ export const OverviewTotalCustomers = (props) => {
             }}
           >
             <SvgIcon>
-              <UsersIcon />
+              <CurrencyDollarIcon />
             </SvgIcon>
           </Avatar>
         </Stack>
@@ -77,7 +93,7 @@ export const OverviewTotalCustomers = (props) => {
   );
 };
 
-OverviewTotalCustomers.propTypes = {
+OverviewTotalOrders.propTypes = {
   difference: PropTypes.number,
   positive: PropTypes.bool,
   value: PropTypes.string.isRequired,

@@ -10,10 +10,24 @@ import {
   SvgIcon,
   Typography
 } from '@mui/material';
+import { useState, useEffect, useCallback } from 'react';
 
-export const OverviewTasksProgress = (props) => {
+export const OverviewOpenOrders = (props) => {
   const { value, sx } = props;
+  const [mongoValue, setMongoValue] = useState(3);
+  const getAllOrder = useCallback(() => {
+    fetch(`http://localhost:3005/sum_orders_today`)
+      .then(response => response.json())
+      .then(data => {
+        const mongoValue1 = Number(data.sum);
+        setMongoValue(6);
+      })
+      .catch(error => console.error(error));
+  }, []);
 
+  useEffect(() => {
+    getAllOrder();
+  }, [getAllOrder]);
   return (
     <Card sx={sx}>
       <CardContent>
@@ -29,10 +43,10 @@ export const OverviewTasksProgress = (props) => {
               gutterBottom
               variant="overline"
             >
-              Task Progress
+              Open Orders
             </Typography>
             <Typography variant="h4">
-              {value}%
+              {mongoValue}
             </Typography>
           </Stack>
           <Avatar
@@ -47,18 +61,18 @@ export const OverviewTasksProgress = (props) => {
             </SvgIcon>
           </Avatar>
         </Stack>
-        <Box sx={{ mt: 3 }}>
+        {/* <Box sx={{ mt: 3 }}>
           <LinearProgress
             value={value}
             variant="determinate"
           />
-        </Box>
+        </Box> */}
       </CardContent>
     </Card>
   );
 };
 
-OverviewTasksProgress.propTypes = {
+OverviewOpenOrders.propTypes = {
   value: PropTypes.number.isRequired,
   sx: PropTypes.object
 };

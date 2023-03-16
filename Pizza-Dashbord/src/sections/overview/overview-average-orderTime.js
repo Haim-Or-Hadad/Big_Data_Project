@@ -1,9 +1,26 @@
 import PropTypes from 'prop-types';
 import CurrencyDollarIcon from '@heroicons/react/24/solid/CurrencyDollarIcon';
 import { Avatar, Card, CardContent, Stack, SvgIcon, Typography } from '@mui/material';
+import { useState, useEffect, useCallback } from 'react';
 
-export const OverviewTotalProfit = (props) => {
+
+
+export const AverageOrderTime = (props) => {
   const { value, sx } = props;
+  const [mongoValue, setMongoValue] = useState(3);
+  const getavgTime = useCallback(() => {
+    fetch(`http://localhost:3005/average_order_time`)
+      .then(response => response.json())
+      .then(data => {
+        const mongoValue1 = `${data.averageTimeMin.toFixed(2)} mins`;
+        setMongoValue(mongoValue1);
+      })
+      .catch(error => console.error(error));
+  }, []);
+
+  useEffect(() => {
+    getavgTime();
+  }, [getavgTime]);
 
   return (
     <Card sx={sx}>
@@ -19,10 +36,10 @@ export const OverviewTotalProfit = (props) => {
               color="text.secondary"
               variant="overline"
             >
-              Total Profit
+              Average Order time
             </Typography>
             <Typography variant="h4">
-              {value}
+              {mongoValue}
             </Typography>
           </Stack>
           <Avatar
@@ -42,7 +59,7 @@ export const OverviewTotalProfit = (props) => {
   );
 };
 
-OverviewTotalProfit.propTypes = {
+AverageOrderTime.propTypes = {
   value: PropTypes.string,
   sx: PropTypes.object
 };

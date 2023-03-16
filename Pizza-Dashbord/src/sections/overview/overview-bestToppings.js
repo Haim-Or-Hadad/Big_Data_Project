@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import { alpha, useTheme } from '@mui/material/styles';
 import { Chart } from 'src/components/chart';
+import { useState, useEffect, useCallback } from 'react';
 
 const useChartOptions = () => {
   const theme = useTheme();
@@ -72,18 +73,9 @@ const useChartOptions = () => {
         show: true
       },
       categories: [
-        'Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sep',
-        'Oct',
-        'Nov',
-        'Dec'
+        'test',
+        'test',
+        'test',
       ],
       labels: {
         offsetY: 5,
@@ -104,9 +96,27 @@ const useChartOptions = () => {
   };
 };
 
-export const OverviewSales = (props) => {
-  const { chartSeries, sx } = props;
+export const OverviewBestToppings = (props) => {
+  const {sx } = props;
   const chartOptions = useChartOptions();
+  const [categories, setCategories] = useState([
+    'test',
+    'test',
+    'test',
+  ]);
+  const getToppings = useCallback(() => {
+    fetch(`http://localhost:3005/best_toppings`)
+      .then(response => response.json())
+      .then(data => {
+        setCategories(data.bestToppings);
+      })
+      .catch(error => console.error(error));
+  }, []);
+
+  useEffect(() => {
+    getToppings();
+  }, [getToppings]);
+
 
   return (
     <Card sx={sx}>
@@ -120,17 +130,29 @@ export const OverviewSales = (props) => {
                 <ArrowPathIcon />
               </SvgIcon>
             )}
+            onClick={getToppings}
           >
             Sync
           </Button>
         )}
-        title="Sales"
+        title="Best Toppings"
       />
       <CardContent>
         <Chart
           height={350}
-          options={chartOptions}
-          series={chartSeries}
+          options={{
+            ...chartOptions,
+            xaxis: {
+              ...chartOptions.xaxis,
+              categories: categories
+            }
+          }}
+          series={[
+            {
+              name: 'Best Toppings',
+              data: [18, 16, 5]
+            },
+          ]}
           type="bar"
           width="100%"
         />
@@ -140,7 +162,6 @@ export const OverviewSales = (props) => {
   );
 };
 
-OverviewSales.protoTypes = {
-  chartSeries: PropTypes.array.isRequired,
+OverviewBestToppings.protoTypes = {
   sx: PropTypes.object
 };

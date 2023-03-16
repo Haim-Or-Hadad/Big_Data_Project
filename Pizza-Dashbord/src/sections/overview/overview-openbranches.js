@@ -1,11 +1,28 @@
 import PropTypes from 'prop-types';
 import ArrowDownIcon from '@heroicons/react/24/solid/ArrowDownIcon';
 import ArrowUpIcon from '@heroicons/react/24/solid/ArrowUpIcon';
-import CurrencyDollarIcon from '@heroicons/react/24/solid/CurrencyDollarIcon';
 import { Avatar, Card, CardContent, Stack, SvgIcon, Typography } from '@mui/material';
+import { useState, useEffect, useCallback } from 'react';
+import UsersIcon from '@heroicons/react/24/solid/UsersIcon';
 
-export const OverviewBudget = (props) => {
+
+
+export const OpenBranches = (props) => {
   const { difference, positive = false, sx, value } = props;
+  const [mongoValue, setMongoValue] = useState(3);
+  const getBranches = useCallback(() => {
+    fetch(`http://localhost:3005/open_branches`)
+      .then(response => response.json())
+      .then(data => {
+        const mongoValue = Number(data.count);
+        setMongoValue(mongoValue);
+      })
+      .catch(error => console.error(error));
+  }, []);
+
+  useEffect(() => {
+    getBranches();
+  }, [getBranches]);
 
   return (
     <Card sx={sx}>
@@ -21,10 +38,10 @@ export const OverviewBudget = (props) => {
               color="text.secondary"
               variant="overline"
             >
-              Budget
+              Open Branches
             </Typography>
             <Typography variant="h4">
-              {value}
+              {mongoValue}
             </Typography>
           </Stack>
           <Avatar
@@ -35,7 +52,7 @@ export const OverviewBudget = (props) => {
             }}
           >
             <SvgIcon>
-              <CurrencyDollarIcon />
+              <UsersIcon />
             </SvgIcon>
           </Avatar>
         </Stack>
@@ -77,7 +94,7 @@ export const OverviewBudget = (props) => {
   );
 };
 
-OverviewBudget.prototypes = {
+OpenBranches.prototypes = {
   difference: PropTypes.number,
   positive: PropTypes.bool,
   sx: PropTypes.object,
