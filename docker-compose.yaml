@@ -98,6 +98,36 @@ services:
     networks:
       - localnet
 
+  elastic_server:
+    build:
+      context: ./elastic_server/
+      dockerfile: dockerfile
+    ports:
+      - "3313:3313"
+    container_name: elastic_server
+    networks:
+      - localnet
+
+  mongo_server:
+    build:
+      context: ./mongo_server/
+      dockerfile: dockerfile
+    ports:
+      - "3005:3005"
+    container_name: mongo_server
+    networks:
+      - localnet
+
+  dashboard:
+    build:
+      context: ./Pizza-Dashbord/
+      dockerfile: dockerfile
+    ports:
+      - "3000:3000"
+    container_name: dashboard
+    networks:
+      - localnet
+
 networks:
   localnet:
     attachable: true
