@@ -1,17 +1,4 @@
-// {
-//     "dependencies": {
-//       "bigml": "^1.26.0",
-//       "bigml-node": "^1.0.0",
-//       "cors": "^2.8.5",
-//       "csv-parser": "^3.0.0",
-//       "express": "^4.18.2",
-//       "mongodb": "^5.1.0"
-//     },
-//     "devDependencies": {
-//       "nodemon": "^2.0.21"
-//     }
-//   }
-  
+
 const { json, response } = require('express');
 const express = require('express')
 var cors = require('cors');

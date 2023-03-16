@@ -5,6 +5,9 @@
     "bigml-node": "^1.0.0",
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "mongodb": "^5.1.0",
+    "node-pandas": "^1.0.5",
+    "nodemon": "^2.0.21",
     "pandas-js": "^0.2.4"
   }
 }
