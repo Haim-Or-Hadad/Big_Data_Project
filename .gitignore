@@ -4,6 +4,6 @@ producer.log
 /bigml_server/node_modules
 /mongo_server/node_modules
 /redis/node_modules
-.vscode
-__pychache__
+/.vscode
+/__pychache__
 producer.log
