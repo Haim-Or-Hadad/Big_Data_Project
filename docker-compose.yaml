@@ -100,14 +100,11 @@ services:
 
   redis:
     image: redis:latest
-    container_name: redis
+    container_name: redis_compose
     ports:
       - "6379:6379"
     networks:
       - localnet
-    volumes:
-      - ./redis.conf:/usr/local/etc/redis/redis.conf
-    command: redis-server /usr/local/etc/redis/redis.conf
 
 
   elastic_server:

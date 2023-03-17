@@ -2,20 +2,7 @@
 #### A simulator will generate transaction data for orders and branch opening/closing events.
 #### The simulator generates a pizza order with a tip and including the order time, in which branch.
 #### After a random time interval the simulator will report that the order is complete.
-in this project we use Amazon SageMaker to build,train,and deploy a machine learning model using 
-the XGBoost ML algorithm. Amazon SageMaker is a fully managed service that provides every developer and data 
-scientist with the ability to build,train,and deploy ML models quickly.
-why we choose SageMaker?
-taking ML models from conceptualization to production is typically complex and time-consuming.  you have to manage a 
-large amounts of data to train the model ,choose the best algorithm for training it, manage the compute capacity whilr
-training it , and then deploy the model into a production. Amazon SageMaker reduces this complexity by making it much easier to build and deploy ML models. After you choose the right algorithms and frameworks from the wide range of choices available, SageMaker manages all of the underlying infrastructure to train your model at petabyte scale, and deploy it to production.
-5 steps to create my ML:
-1.Create a SageMaker notebook instance
-2.Prepare the data
-3.Train the model to learn from the data
-4.Deploy the model
-5.Evaluate your ML model's performance
----
+
 
 ## prerequisets:
 

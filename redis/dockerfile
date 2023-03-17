@@ -1,8 +1,10 @@
-# Use an official Redis runtime as a parent image
-FROM redis:latest
+FROM node:14
 
-# Expose the Redis port
-EXPOSE 6379
+COPY package.json .
+COPY package-lock.json .
+RUN npm ci
 
-# Set the default command to run when starting the container
-CMD ["redis-server"]
+COPY . .
+
+EXPOSE 8080
+CMD ["npm", "start"]

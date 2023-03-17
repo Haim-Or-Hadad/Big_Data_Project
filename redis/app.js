@@ -1,23 +1,44 @@
-const redis = require('redis');
+const express = require('express')
+const redis = require("redis");
 
-const client = redis.createClient({ host: '192.168.1.124', port: 6379 });
+const port = process.env.PORT || 8080
 
-client.on('error', (err) => {
-  console.error(err);
+const app = express()
+
+app.use(express.text())
+
+const client = redis.createClient({
+  url: "redis://localhost:6379"
 });
 
-client.set('key', 'value', (err, reply) => {
-  if (err) {
-    console.error(err);
-  } else {
-    console.log(reply);
-  }
+client.on("error", function(error) {
+  console.error(error);
 });
 
-client.get('key', (err, reply) => {
-  if (err) {
-    console.error(err);
-  } else {
-    console.log(reply);
-  }
-});
+app.get("/", (req, res) => {
+  console.log("request at URL")
+  res.send("hello nabeeel from port " + port)
+})
+
+app.get("/:key", (req, res) => {
+  const key = req.params.key
+  client.get(key, (error, reply) => {
+    if (error) res.send("Error")
+    else res.send(reply)
+  })
+})
+
+app.post("/:key", (req, res) => {
+  const key = req.params.key
+  const data = req.body
+  client.set(key, data, (error, reply) => {
+    if (error) res.send("Error")
+    else res.send(reply)
+  })
+})
+
+app.posts
+
+app.listen(port, () => {
+  console.log("app is listening on port " + port)
+})
