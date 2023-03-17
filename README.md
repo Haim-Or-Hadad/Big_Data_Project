@@ -162,3 +162,11 @@ watch -n1 'docker ps' # show in "live" the command
 bashrc # vim this directory to add new alias
 git rm -env # remove file or dir from git 
 ```
+
+#### Redis Commands
+```bash
+  docker run -d --name redis-docker -p 6379:6379 redis/redis-stack-server:latest
+  docker exec -it redis-docker redis-cli
+  KEYS * // to see all keys aftr entering redis-cli
+  GET <key_name> // to see values
+```
