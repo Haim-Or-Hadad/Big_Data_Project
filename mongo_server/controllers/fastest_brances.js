@@ -1,5 +1,4 @@
-
-const handlefastest = async (req,res,client) => {
+const handlefastest = async (req, res, client) => {
     try {
       const database = client.db("pizza");
       const collection = database.collection("orders");
@@ -10,16 +9,22 @@ const handlefastest = async (req,res,client) => {
           }
         },
         {
+          $addFields: {
+            orderDate: { $toDate: "$order_date" },
+            orderTime: { $toDate: { $concat: [ "$order_date", "T", "$order_time", "Z" ] } }
+          }
+        },
+        {
           $group: {
             _id: "$branch_id",
-            avgOrderTime: { $avg: { $subtract: [ "$end_time", "$start_time" ] } }
+            avgOrderTime: { $avg: "$orderDateTime" }
           }
         },
         {
           $sort: { avgOrderTime: 1 }
         },
         {
-          $limit: 6
+          $limit: 5
         },
         {
           $lookup: {
@@ -33,11 +38,12 @@ const handlefastest = async (req,res,client) => {
           $project: {
             _id: 0,
             branchId: "$_id",
-            branchName: { $arrayElemAt: [ "$branchInfo.branch_name", 0 ] },
-            avgOrderTime: { $divide: [ "$avgOrderTime", 1000 * 60 ] } // convert from milliseconds to minutes
+            branchName: { $arrayElemAt: ["$branchInfo.branch_name", 0] },
+            avgOrderTime: { $divide: ["$avgOrderTime", 1000 * 60] } // convert from milliseconds to minutes
           }
         }
       ]).toArray();
+      console.log(lowestOrderTimeBranches);
       res.status(200).send(lowestOrderTimeBranches);
       return lowestOrderTimeBranches;
     } catch (error) {
@@ -45,8 +51,8 @@ const handlefastest = async (req,res,client) => {
       return null;
     }
   };
-  
 
-module.exports = {
-    handlefastest: handlefastest
-};
+  
+  module.exports = {
+    handlefastest :handlefastest
+  };

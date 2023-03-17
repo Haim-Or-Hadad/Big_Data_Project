@@ -11,6 +11,7 @@ const handleBestBranches = require('./controllers/5_best_branches')
 const handleOrdersSum = require('./controllers/sum_orders_today')
 const handlecountOrdersByRegion = require('./controllers/Distribution_per_region')
 const handlefastest = require('./controllers/fastest_brances')
+const handleStartTimeArray = require('./controllers/count_orders_in_day')
 
 const app = express();
 app.use(cors());
@@ -46,3 +47,6 @@ app.get('/best_branches',(req,res,)=>{handleBestBranches.handleBestBranches(req,
 app.get('/sum_orders_today',(req,res,)=>{handleOrdersSum.handleOrdersSum(req,res,client)});
 app.get('/distribution',(req,res,)=>{handlecountOrdersByRegion.handlecountOrdersByRegion(req,res,client)});
 app.get('/fastest',(req,res,)=>{handlefastest.handlefastest(req,res,client)});
+app.get('/hours_order',(req,res,)=>{handleStartTimeArray
+    .handleStartTimeArray
+    (req,res,client)});
