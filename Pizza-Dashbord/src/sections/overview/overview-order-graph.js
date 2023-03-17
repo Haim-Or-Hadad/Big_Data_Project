@@ -35,7 +35,6 @@ const useChartOptions = () => {
     },
     grid: {
       borderColor: theme.palette.divider,
-      strokeDashArray: 2,
       xaxis: {
         lines: {
           show: false
@@ -55,11 +54,6 @@ const useChartOptions = () => {
         columnWidth: '40px'
       }
     },
-    stroke: {
-      colors: ['transparent'],
-      show: true,
-      width: 2
-    },
     theme: {
       mode: theme.palette.mode
     },
@@ -73,9 +67,11 @@ const useChartOptions = () => {
         show: true
       },
       categories: [
-        'test',
-        'test',
-        'test',
+        '08:00',
+        '10:00',
+        '14:00',
+        '18:00',
+        '22:00',
       ],
       labels: {
         offsetY: 5,
@@ -95,18 +91,37 @@ const useChartOptions = () => {
   };
 };
 
-export const OverviewBestToppings = (props) => {
+const countOrdersByHour = (hoursArray) => {
+  const ordersByHour = {};
+
+  hoursArray.forEach((time) => {
+    const hour = time.split(':')[0];
+    if (!ordersByHour[hour]) {
+      ordersByHour[hour] = 0;
+    }
+    ordersByHour[hour]++;
+  });
+
+  return Object.entries(ordersByHour).map(([hour, count]) => ({
+    time: `${hour}:00:00`,
+    count,
+  }));
+};
+
+export const OverviewOrderTimes = (props) => {
   const {sx } = props;
   const chartOptions = useChartOptions();
   const [chartSeries, setChartSeries] = useState([]);
   const [labels, setLabels] = useState([]);
   const getToppings = useCallback(() => {
-    fetch(`http://localhost:3005/best_toppings`)
+    fetch(`http://localhost:3005/hours_order`)
       .then(response => response.json())
       .then(data => {
-        data=data.bestToppings 
-        setChartSeries(data.map(({ name, count }) => count));
-        setLabels(data.map(({ name }) => name));
+        data=data.startTimes
+        const ordersByHour = countOrdersByHour(data);
+        console.log(ordersByHour)
+        setChartSeries(ordersByHour.map(({ count }) => count));
+        setLabels(ordersByHour.map(({ time }) => time));
         // Send the retrieved data to localhost:3001
         fetch('http://localhost:3001/set', {
           method: 'POST',
@@ -123,7 +138,6 @@ export const OverviewBestToppings = (props) => {
     getToppings();
   }, [getToppings]);
 
-
   return (
     <Card sx={sx}>
       <CardHeader
@@ -136,12 +150,12 @@ export const OverviewBestToppings = (props) => {
                 <ArrowPathIcon />
               </SvgIcon>
             )}
-            onClick={getToppings}
+            // onClick={getToppings}
           >
             Sync
           </Button>
         )}
-        title="Best Toppings"
+        title="Times"
       />
       <CardContent>
         <Chart
@@ -155,11 +169,11 @@ export const OverviewBestToppings = (props) => {
           }}
           series={[
             {
-              name: 'Best Toppings',
+              name: 'Time',
               data: chartSeries
             },
           ]}
-          type="bar"
+          type="line"
           width="100%"
         />
       </CardContent>
@@ -168,6 +182,6 @@ export const OverviewBestToppings = (props) => {
   );
 };
 
-OverviewBestToppings.protoTypes = {
+OverviewOrderTimes.protoTypes = {
   sx: PropTypes.object
 };

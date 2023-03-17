@@ -3,8 +3,7 @@ import { subDays, subHours } from 'date-fns';
 import { Box, Container, Unstable_Grid2 as Grid } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { OpenBranches } from 'src/sections/overview/overview-openbranches';
-import { OverviewLatestOrders } from 'src/sections/overview/overview-latest-orders';
-import { OverviewLatestProducts } from 'src/sections/overview/overview-latest-products';
+import {OverviewOrderTimes}  from 'src/sections/overview/overview-order-graph';
 import { OverviewSales } from 'src/sections/overview/overview-sales';
 import { OverviewOpenOrders } from 'src/sections/overview/overview-open-orders';
 import { OverviewTotalOrders } from 'src/sections/overview/overview-total-orders';
@@ -100,16 +99,23 @@ const Page = () => (
             lg={4}
           >
             <OverviewTraffic
-              chartSeries={[63, 15, 22]}
-              labels={['Desktop', 'Tablet', 'Phone']}
               sx={{ height: '100%' }}
             />
           </Grid>
+          
           <Grid
             xs={12}
             lg={8}
           >
             <OverviewBestToppings
+              sx={{ height: '100%' }}
+            />
+          </Grid>
+          <Grid
+            xs={2}
+            lg={8}
+          >
+            <OverviewOrderTimes
               sx={{ height: '100%' }}
             />
           </Grid>

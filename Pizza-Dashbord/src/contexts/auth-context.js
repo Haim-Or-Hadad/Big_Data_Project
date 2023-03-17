@@ -83,7 +83,7 @@ export const AuthProvider = (props) => {
     if (isAuthenticated) {
       const user = {
         id: '5e86809283e28b96d2d38537',
-        avatar: '/assets/avatars/avatar-anika-visser.png',
+        avatar: '/assets/avatars/avatar-Ilan.png',
         name: 'Ilan Gold',
         email: 'Goldlmilan@gmail.com'
       };
@@ -116,7 +116,7 @@ export const AuthProvider = (props) => {
 
     const user = {
       id: '5e86809283e28b96d2d38537',
-      avatar: '/assets/avatars/avatar-anika-visser.png',
+      avatar: '/assets/avatars/avatar-Ilan.png',
       name: 'Ilan Gold',
       email: 'Goldlmilan@gmail.com'
     };
@@ -140,7 +140,7 @@ export const AuthProvider = (props) => {
 
     const user = {
       id: '5e86809283e28b96d2d38537',
-      avatar: '/assets/avatars/avatar-anika-visser.png',
+      avatar: '/assets/avatars/avatar-Ilan',
       name: 'Ilan Gold',
       email: 'goldlmilan@gmail.com'
     };

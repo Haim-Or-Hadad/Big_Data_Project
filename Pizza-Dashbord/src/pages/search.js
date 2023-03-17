@@ -4,27 +4,13 @@ import { subDays, subHours } from 'date-fns';
 import { Box, Button, Container, Stack, SvgIcon, Typography } from '@mui/material';
 import { useSelection } from 'src/hooks/use-selection';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import { SearchTable } from 'src/sections/customer/search-table';
-import { CustomersSearch } from 'src/sections/customer/customers-search';
+import { SearchTable } from 'src/sections/search/search-table';
+import { CustomersSearch } from 'src/sections/search/customers-search';
 import { applyPagination } from 'src/utils/apply-pagination';
 
 const now = new Date();
 
 const data = [
-  {
-    id: '5e86809283e28b96d2d38537',
-    address: {
-      city: 'Madrid',
-      country: 'Spain',
-      name: 'Ilan Gold',
-      street: '4158  Hedge Street'
-    },
-    avatar: '/assets/avatars/avatar-anika-visser.png',
-    createdAt: subDays(subHours(now, 11), 2).getTime(),
-    email: 'goldlmilan@gmail.com',
-    name: 'Ilan Gold',
-    phone: '908-691-3242'
-  },
 ];
 
 const useCustomers = (page, rowsPerPage) => {

@@ -13,7 +13,7 @@ import {
   Unstable_Grid2 as Grid
 } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import { BigMLTable } from 'src/sections/companies/bigML-table';
+import { BigMLTable } from 'src/sections/analyze/bigML-table';
 import { useCallback, useMemo, useState,useEffect } from 'react';
 import { applyPagination } from 'src/utils/apply-pagination';
 import { useSelection } from 'src/hooks/use-selection';
@@ -21,19 +21,6 @@ import { useSelection } from 'src/hooks/use-selection';
 const now = new Date();
 
 const data = [
-  {
-    id: '5e86809283e28b96d2d38537',
-    address: {
-      city: 'Madrid',
-      country: 'Spain',
-      name: 'Ilan Gold',
-      street: '4158  Hedge Street'
-    },
-    avatar: '/assets/avatars/avatar-anika-visser.png',
-    email: 'goldlmilan@gmail.com',
-    name: 'Ilan Gold',
-    phone: '908-691-3242'
-  },
 ];
 
 const useCustomers = (page, rowsPerPage) => {

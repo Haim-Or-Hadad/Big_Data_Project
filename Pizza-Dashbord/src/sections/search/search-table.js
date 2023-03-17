@@ -113,7 +113,10 @@ export const SearchTable = (props) => {
                       {order.branch_id}
                     </TableCell>
                     <TableCell>
-                    {order.order_time}
+                    {order.start_time}
+                    </TableCell>
+                    <TableCell>
+                    {order.end_time}
                     </TableCell>
                     <TableCell>
                       {order.status}

@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import ComputerDesktopIcon from '@heroicons/react/24/solid/ComputerDesktopIcon';
 import DeviceTabletIcon from '@heroicons/react/24/solid/DeviceTabletIcon';
 import PhoneIcon from '@heroicons/react/24/solid/PhoneIcon';
+import { useState, useEffect, useCallback } from 'react';
 import {
   Box,
   Card,
@@ -24,7 +25,9 @@ const useChartOptions = (labels) => {
     colors: [
       theme.palette.primary.main,
       theme.palette.success.main,
-      theme.palette.warning.main
+      theme.palette.warning.main,
+      theme.palette.error.main,
+      theme.palette.info.main
     ],
     dataLabels: {
       enabled: false
@@ -81,12 +84,35 @@ const iconMap = {
 };
 
 export const OverviewTraffic = (props) => {
-  const { chartSeries, labels, sx } = props;
+  const {sx } = props;
+  const [chartSeries, setChartSeries] = useState([]);
+  const [labels, setLabels] = useState([]);
   const chartOptions = useChartOptions(labels);
+  const getdistribution = useCallback(() => {
+    fetch(`http://localhost:3005/distribution`)
+      .then(response => response.json())
+      .then(data => {
+        setChartSeries(data.map(({ _id, count }) => count));
+        setLabels(data.map(({ _id }) => _id));
+        // Send the retrieved data to localhost:3001
+        // fetch('http://localhost:3001/set', {
+        //   method: 'POST',
+        //   headers: {
+        //     'Content-Type': 'application/json'
+        //   },
+        //   body: JSON.stringify({ key: 'BestToppings', value: JSON.stringify(categories)})
+        // });
+      })
+      .catch(error => console.error(error));
+  }, []);
+
+  useEffect(() => {
+    getdistribution();
+  }, [getdistribution]);
 
   return (
     <Card sx={sx}>
-      <CardHeader title="Traffic Source" />
+      <CardHeader title="Orders by region" />
       <CardContent>
         <Chart
           height={300}
@@ -125,7 +151,7 @@ export const OverviewTraffic = (props) => {
                   color="text.secondary"
                   variant="subtitle2"
                 >
-                  {item}%
+                  {item}
                 </Typography>
               </Box>
             );
@@ -137,7 +163,5 @@ export const OverviewTraffic = (props) => {
 };
 
 OverviewTraffic.propTypes = {
-  chartSeries: PropTypes.array.isRequired,
-  labels: PropTypes.array.isRequired,
   sx: PropTypes.object
 };
