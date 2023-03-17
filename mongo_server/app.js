@@ -9,6 +9,8 @@ const handleAverageOrderTime = require('./controllers/average_order_time');
 const handleBestToppings = require('./controllers/5_top_toppings');
 const handleBestBranches = require('./controllers/5_best_branches')
 const handleOrdersSum = require('./controllers/sum_orders_today')
+const handlecountOrdersByRegion = require('./controllers/Distribution_per_region')
+const handlefastest = require('./controllers/fastest_brances')
 
 const app = express();
 app.use(cors());
@@ -42,3 +44,5 @@ app.get('/average_order_time',(req,res,)=>{handleAverageOrderTime.handleAverageO
 app.get('/best_toppings',(req,res,)=>{handleBestToppings.handleBestToppings(req,res,client)});
 app.get('/best_branches',(req,res,)=>{handleBestBranches.handleBestBranches(req,res,client)});
 app.get('/sum_orders_today',(req,res,)=>{handleOrdersSum.handleOrdersSum(req,res,client)});
+app.get('/distribution',(req,res,)=>{handlecountOrdersByRegion.handlecountOrdersByRegion(req,res,client)});
+app.get('/fastest',(req,res,)=>{handlefastest.handlefastest(req,res,client)});
