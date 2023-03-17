@@ -57,13 +57,12 @@ def receipt(err,msg):
 #####################
 print('Kafka Producer has been initiated...')
 
-def simulate_pizza_order():
-    branches_list = [
-         {"id":1,"name":"GOLD PIZZA","region":"North",'open' : '10:00:00', 'close' : '24:00:00'}
+branches_list = [
+         {"id":1,"name":"GOLD PIZZA","region":"North",'open' : '10:00:00', 'close' : '00:00:00'}
         ,{"id":2,"name":"GOLD PIZZA","region":"Haifa",'open' : '10:00:00', 'close' : '23:00:00'}
         ,{"id":3,"name":"GOLD PIZZA","region":"Center",'open' : '09:00:00', 'close' : '20:00:00'}
         ,{"id":4,"name":"GOLD PIZZA","region":"Dan",'open' : '08:00:00', 'close' : '17:00:00'}
-        ,{"id":5,"name":"GOLD PIZZA","region":"South",'open' : '11:00:00', 'close' : '24:00:00'}
+        ,{"id":5,"name":"GOLD PIZZA","region":"South",'open' : '11:00:00', 'close' : '00:00:00'}
         ,{"id":6,"name":"GOLD PIZZA","region":"North",'open' : '12:00:00', 'close' : '23:00:00'}
         ,{"id":7,"name":"GOLD PIZZA","region":"Haifa",'open' : '13:00:00', 'close' : '22:00:00'}
         ,{"id":8,"name":"GOLD PIZZA","region":"Center",'open' : '09:00:00', 'close' : '21:00:00'}
@@ -73,8 +72,8 @@ def simulate_pizza_order():
         ,{"id":12,"name":"GOLD PIZZA","region":"Haifa",'open' : '10:00:00', 'close' : '17:00:00'}
         ,{"id":13,"name":"GOLD PIZZA","region":"Center",'open' : '11:00:00', 'close' : '17:00:00'}
         ,{"id":14,"name":"GOLD PIZZA","region":"Dan",'open' : '11:00:00', 'close' : '17:00:00'}
-        ,{"id":15,"name":"GOLD PIZZA","region":"South",'open' : '10:00:00', 'close' : '24:00:00'}
-        ,{"id":16,"name":"GOLD PIZZA","region":"North",'open' : '10:00:00', 'close' : '24:00:00'}
+        ,{"id":15,"name":"GOLD PIZZA","region":"South",'open' : '10:00:00', 'close' : '00:00:00'}
+        ,{"id":16,"name":"GOLD PIZZA","region":"North",'open' : '10:00:00', 'close' : '00:00:00'}
         ,{"id":17,"name":"GOLD PIZZA","region":"Haifa",'open' : '08:00:00', 'close' : '21:00:00'}
         ,{"id":18,"name":"GOLD PIZZA","region":"Center",'open' : '07:00:00', 'close' : '22:00:00'}
         ,{"id":19,"name":"GOLD PIZZA","region":"Dan",'open' : '10:00:00', 'close' : '20:00:00'}
@@ -82,51 +81,43 @@ def simulate_pizza_order():
         ,{"id":21,"name":"GOLD PIZZA","region":"North",'open' : '12:00:00', 'close' : '17:00:00'}
         ,{"id":22,"name":"GOLD PIZZA","region":"Haifa",'open' : '12:00:00', 'close' : '17:00:00'}
         ,{"id":23,"name":"GOLD PIZZA","region":"Center",'open' : '14:00:00', 'close' : '22:00:00'}
-        ,{"id":24,"name":"GOLD PIZZA","region":"Dan",'open' : '12:00:00', 'close' : '24:00:00'}
+        ,{"id":24,"name":"GOLD PIZZA","region":"Dan",'open' : '12:00:00', 'close' : '00:00:00'}
         ,{"id":25,"name":"GOLD PIZZA","region":"South",'open' : '12:00:00', 'close' : '04:00:00'}
         ,{"id":26,"name":"GOLD PIZZA","region":"North",'open' : '11:00:00', 'close' : '01:00:00'}
-        ,{"id":27,"name":"GOLD PIZZA","region":"Haifa",'open' : '09:00:00', 'close' : '24:00:00'}
-        ,{"id":28,"name":"GOLD PIZZA","region":"Center",'open' : '08:00:00', 'close' : '24:00:00'}
+        ,{"id":27,"name":"GOLD PIZZA","region":"Haifa",'open' : '09:00:00', 'close' : '23:00:00'}
+        ,{"id":28,"name":"GOLD PIZZA","region":"Center",'open' : '08:00:00', 'close' : '23:00:00'}
         ,{"id":29,"name":"GOLD PIZZA","region":"Dan",'open' : '09:00:00', 'close' : '21:00:00'}
         ,{"id":30,"name":"GOLD PIZZA","region":"South",'open' : '10:00:00', 'close' : '22:00:00'}]
-    # for branch in branches_list:
-    #     m=json.dumps(branch)
-    #     producer.poll(1)
-    #     producer.produce('branches', m.encode('utf-8')  , callback=delivery_report)
-    #     logging.info(f'{branch} produced')
-    #     producer.flush()
-    toppings = ["Pepperoni", "Mushrooms", "Onions", "Sausage", "Bacon", "Extra Cheese"]
+
+
+toppings = ["Pepperoni", "Mushrooms", "Onions", "Sausage", "Bacon", "Extra Cheese"]
+
+
+
+
+def simulate_pizza_order():
     order_id = 1
     while True:
-        # for _ in range(10):
             branch = random.choice(branches_list)
-            # print(branch)
-            # now = datetime.datetime.now().time()  # Get the current time
-            # print(now)
+            # Get today's date and a random date within the next week
             today = datetime.date.today()
             next_week = today + datetime.timedelta(days=7)
             random_date = today + datetime.timedelta(days=random.randint(0, 7))
-            time_obj = datetime.datetime.strptime(branch['open'], '%H:%M:%S').time()
-            # print(time_obj)
-            # if not Branch(branch["id"],branch["name"],branch["region"]).open:
-            #     #print(f"{branch['name']} ({branch['region']}) branch is closed, please select another branch.")
-            #     continue
-
-            # if now > time_obj:
-            #     #print(f"{branch['name']} ({branch['region']}) branch is closed, please select another branch.")
-            #     continue
+ 
             order_toppings = random.sample(toppings, k=random.randint(1, len(toppings)))
-            print(order_toppings)
             order = PizzaOrder(order_id, branch["id"], branch["name"], branch["region"], order_toppings)
-            #print(f"Pizza order placed at {order.order_date_time} for branch {order.branch_name} ({order.region}) with toppings {order.toppings} and order ID: {order.order_id}.")
-            complete_time = random.randint(5, 30)
-            dt_obj = datetime.datetime.strptime(order.order_date_time.isoformat(), "%Y-%m-%dT%H:%M:%S.%f")
+            # print(f"Pizza order placed at {order.order_date_time} for branch {order.branch_name} ({order.region}) with toppings {order.toppings} and order ID: {order.order_id}.")
             date = random_date.isoformat()
-            time_ = dt_obj.time().isoformat()
+
+            # Parse the open and close time strings into datetime.time objects
+            open_time = datetime.datetime.strptime(branch['open'], '%H:%M:%S').time()
+            close_time = datetime.datetime.strptime(branch['close'], '%H:%M:%S').time()
             
-            time_obj = datetime.datetime.strptime(time_, "%H:%M:%S.%f").time()
-            time_only_str = time_obj.strftime("%H:%M:%S")
-            print(order_id)
+            # Generate a random time between open and close time
+            time_diff = datetime.datetime.combine(datetime.date.today(), close_time) - datetime.datetime.combine(datetime.date.today(), open_time)
+            random_time = datetime.datetime.combine(datetime.date.today(), open_time) + datetime.timedelta(seconds=random.randint(0, time_diff.seconds))
+            time_only_str = random_time.strftime('%H:%M:%S')
+
             order_id += 1
             data={
             'order_id' : order_id,
@@ -143,15 +134,12 @@ def simulate_pizza_order():
             producer.produce('shared', m.encode('utf-8')  , callback=delivery_report)
             producer.flush()
             order.complete_order()
-            # generate a random number of seconds between 900 (15 minutes) and 1800 (30 minutes)
-            random_seconds = random.randint(900, 1800)
-
+            # generate a random number of seconds between 540 (9 minutes) and 2400 (40 minutes)
+            random_seconds = random.randint(540, 2400 )
+            orderStartTime = datetime.datetime.strptime(time_only_str, '%H:%M:%S').time()
             # add the random number of seconds to the start time to get the end time
-            end_order = (order.order_date_time + datetime.timedelta(seconds=random_seconds)).isoformat()
-            dt_obj = datetime.datetime.strptime(end_order, "%Y-%m-%dT%H:%M:%S.%f")
-            time_ = dt_obj.time().isoformat()
-            # time_obj = datetime.datetime.strptime(time_, "%H:%M:%S.%f").time()
-            # time_only_str = time_obj.strftime("%H:%M:%S")
+            end_order = (datetime.datetime.combine(datetime.date.today(), orderStartTime) + datetime.timedelta(seconds=random_seconds)).time()
+            end_time_str = end_order.strftime('%H:%M:%S')
             data={
             'order_id' : order_id,
             'branch_id': order.branch_id,
@@ -159,9 +147,10 @@ def simulate_pizza_order():
             'topping': order.toppings ,
             'order_date' : date,
             'start_time ' : time_only_str,
-            'order_time' : time_, 
+            'order_time' : end_time_str, 
             'status': order.status 
             }
+            print(data)
             m=json.dumps(data)
             producer.poll(1)
             producer.produce('shared', m.encode('utf-8')  , callback=delivery_report)
