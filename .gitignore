@@ -3,3 +3,4 @@ producer.log
 /elastic_server/node_modules
 /bigml_server/node_modules
 /mongo_server/node_modules
+/redis/node_modules
