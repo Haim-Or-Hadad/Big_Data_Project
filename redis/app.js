@@ -1,44 +1,26 @@
-const express = require('express')
-const redis = require("redis");
+import { createClient } from 'redis'; 
+const express = require('express');
 
-const port = process.env.PORT || 8080
+const client = createClient();
+const app = express();
 
-const app = express()
+client.on('error', err => console.log('Redis Client Error', err));
+await client.connect();
+// await client.set(key, value);
 
-app.use(express.text())
+app.post('/set', async (req, res) => {
+  const { key, value } = req.body;
+  await client.set(key, value);
 
-const client = redis.createClient({
-  url: "redis://localhost:6379"
+  res.sendStatus(200);
 });
 
-client.on("error", function(error) {
-  console.error(error);
+
+app.listen(3001, () => {
+  console.log('Express server listening on port 3001');
 });
 
-app.get("/", (req, res) => {
-  console.log("request at URL")
-  res.send("hello nabeeel from port " + port)
-})
-
-app.get("/:key", (req, res) => {
-  const key = req.params.key
-  client.get(key, (error, reply) => {
-    if (error) res.send("Error")
-    else res.send(reply)
-  })
-})
-
-app.post("/:key", (req, res) => {
-  const key = req.params.key
-  const data = req.body
-  client.set(key, data, (error, reply) => {
-    if (error) res.send("Error")
-    else res.send(reply)
-  })
-})
-
-app.posts
-
-app.listen(port, () => {
-  console.log("app is listening on port " + port)
-})
+// const value = await client.get('key'); 
+// const test = await client.get('Haim'); 
+// console.log(value); console.log(test); 
+await client.disconnect(); 
