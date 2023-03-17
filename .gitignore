@@ -7,3 +7,4 @@ producer.log
 /.vscode
 /__pychache__
 producer.log
+/redis-6.2.4

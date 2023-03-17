@@ -21,6 +21,15 @@ export const OverviewOpenOrders = (props) => {
       .then(data => {
         const mongoValue1 = Number(data.sum);
         setMongoValue(6);
+        
+        // Send the retrieved data to localhost:3001
+        fetch('http://localhost:3001/set', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ key: 'OpenOrders', value: mongoValue })
+        });
       })
       .catch(error => console.error(error));
   }, []);

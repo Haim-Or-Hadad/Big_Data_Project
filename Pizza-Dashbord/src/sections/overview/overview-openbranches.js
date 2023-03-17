@@ -14,8 +14,16 @@ export const OpenBranches = (props) => {
     fetch(`http://localhost:3005/open_branches`)
       .then(response => response.json())
       .then(data => {
-        const mongoValue = Number(data.count);
-        setMongoValue(mongoValue);
+        setMongoValue(Number(data.count));
+        
+        // Send the retrieved data to localhost:3001
+        fetch('http://localhost:3001/set', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ key: 'OpenBranches', value: mongoValue })
+        });
       })
       .catch(error => console.error(error));
   }, []);
