@@ -1,11 +1,15 @@
 # pizza_simulator
-#### A simulator will generate transaction data for orders and branch opening/closing events.
-#### The simulator generates a pizza order with a tip and including the order time, in which branch.
-#### After a random time interval the simulator will report that the order is complete.
+#### This project is a big data management trend for a large pizzeria chain.
+#### The system creates thousands of pizza orders at random hours, the data is pushed to Kafka Topic and #### then with the help of three connectors it is pushed to MongoDB (two collections) and to Elastic search.
+#### In addition, there is a dashboard that sends requests to create association rules through bigml. Requests to search for orders on certain dates in Elastic. and presenting general data through MongoDB.
+#### all the gemeral data saved in redis server .
+#### all the project running with one click with docker-compose!.
 
+## How To Run 
+1. clone the project 
+- navigate in terminal to root folder 
 
 ## prerequisets:
-
 ### windows
 ```text
 python3.8
