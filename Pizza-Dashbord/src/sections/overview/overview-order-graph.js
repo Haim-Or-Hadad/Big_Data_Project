@@ -113,13 +113,12 @@ export const OverviewOrderTimes = (props) => {
   const chartOptions = useChartOptions();
   const [chartSeries, setChartSeries] = useState([]);
   const [labels, setLabels] = useState([]);
-  const getToppings = useCallback(() => {
+  const dailyOrderTimes = useCallback(() => {
     fetch(`http://localhost:3005/hours_order`)
       .then(response => response.json())
       .then(data => {
         data=data.startTimes
         const ordersByHour = countOrdersByHour(data);
-        console.log(ordersByHour)
         setChartSeries(ordersByHour.map(({ count }) => count));
         setLabels(ordersByHour.map(({ time }) => time));
         // Send the retrieved data to localhost:3001
@@ -128,15 +127,15 @@ export const OverviewOrderTimes = (props) => {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ key: 'BestToppings', value: JSON.stringify(categories)})
+          body: JSON.stringify({ key: 'dailyOrderTimes', value: JSON.stringify({labels:labels, data:chartSeries})})
         });
       })
       .catch(error => console.error(error));
   }, []);
 
   useEffect(() => {
-    getToppings();
-  }, [getToppings]);
+    dailyOrderTimes();
+  }, [dailyOrderTimes]);
 
   return (
     <Card sx={sx}>
@@ -150,7 +149,7 @@ export const OverviewOrderTimes = (props) => {
                 <ArrowPathIcon />
               </SvgIcon>
             )}
-            // onClick={getToppings}
+            onClick={dailyOrderTimes}
           >
             Sync
           </Button>

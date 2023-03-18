@@ -93,7 +93,7 @@ export const Layout = (props) => {
               sx={{ mb: 3 }}
               variant="subtitle1"
             >
-              A professional kit that comes with ready-to-use MUI components.
+              A Big Data Project by: Ilan Gold and Hain Or Hadad
             </Typography>
             <img
               alt=""
