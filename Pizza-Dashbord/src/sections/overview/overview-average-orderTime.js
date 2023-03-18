@@ -12,7 +12,7 @@ export const AverageOrderTime = (props) => {
     fetch(`http://localhost:3005/average_order_time`)
       .then(response => response.json())
       .then(data => {
-        setMongoValue(`${data.averageTimeMin.toFixed(2)} mins`);
+        setMongoValue(data.formattedDuration);
         // Send the retrieved data to localhost:3001
         fetch('http://localhost:3001/set', {
           method: 'POST',

@@ -102,10 +102,14 @@ const countOrdersByHour = (hoursArray) => {
     ordersByHour[hour]++;
   });
 
-  return Object.entries(ordersByHour).map(([hour, count]) => ({
-    time: `${hour}:00:00`,
-    count,
-  }));
+  const sortedOrdersByHour = Object.entries(ordersByHour)
+    .map(([hour, count]) => ({
+      time: `${hour}:00:00`,
+      count,
+    }))
+    .sort((a, b) => a.time.localeCompare(b.time)); // sort by time
+
+  return sortedOrdersByHour;
 };
 
 export const OverviewOrderTimes = (props) => {

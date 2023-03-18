@@ -105,7 +105,7 @@ export const OverviewTraffic = (props) => {
       })
       .catch(error => console.error(error));
   }, []);
-
+ 
   useEffect(() => {
     getdistribution();
   }, [getdistribution]);
