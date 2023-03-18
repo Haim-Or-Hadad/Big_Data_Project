@@ -1,13 +1,18 @@
 # pizza_simulator
-#### This project is a big data management trend for a large pizzeria chain.
-#### The system creates thousands of pizza orders at random hours, the data is pushed to Kafka Topic and #### then with the help of three connectors it is pushed to MongoDB (two collections) and to Elastic search.
-#### In addition, there is a dashboard that sends requests to create association rules through bigml. Requests to search for orders on certain dates in Elastic. and presenting general data through MongoDB.
-#### all the gemeral data saved in redis server .
-#### all the project running with one click with docker-compose!.
+This project is a big data management trend for a large pizzeria chain.
+The system creates thousands of pizza orders at random hours, the data is pushed to Kafka Topic and then with the help of three connectors it is pushed to MongoDB (two collections) and to Elastic search.
+In addition, there is a dashboard that sends requests to create association rules through bigml. Requests to search for orders on certain dates in Elastic. and presenting general data through MongoDB.
+all the gemeral data saved in redis server .
+all the project running with one click with docker-compose!.
 
 ## How To Run 
-1. clone the project 
-- navigate in terminal to root folder 
+1. clone the project. 
+2. navigate in terminal to root folder .
+3.run the command docker-compose up -d.
+4. all the containers need to run , check with docker ps.
+5.start the three connectors.
+6. the commnds are below . 
+7. go to dashboard in localhost:3000 and that's it !
 
 ## prerequisets:
 ### windows
