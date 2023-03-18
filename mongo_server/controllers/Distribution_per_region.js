@@ -5,7 +5,7 @@ const handlecountOrdersByRegion = async (req,res,client) => {
       const countByRegion = await collection.aggregate([
         {
           $match: {
-            status: "completed"
+            status: "in progress"
           }
         },
         {
@@ -15,6 +15,7 @@ const handlecountOrdersByRegion = async (req,res,client) => {
           }
         }
       ]).toArray();
+      console.log("region")
       console.log(countByRegion)
       res.status(200).send(countByRegion);
       return countByRegion;

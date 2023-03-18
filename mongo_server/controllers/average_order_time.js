@@ -1,27 +1,33 @@
+const moment = require('moment');
 const handleAverageOrderTime = async (req, res, client) => {
     try {
         const database = client.db("pizza");
         const ordersCollection = database.collection("orders");
-        const inProgressOrders = await ordersCollection.find({ status: "in progress" }).toArray();
-        const orderIdsInProgress = inProgressOrders.map(order => order.order_id);
-        const completedOrders = await ordersCollection.find({ order_id: { $in: orderIdsInProgress }, status: "completed" }).toArray();
+        const completedOrders = await ordersCollection.find({ status: "completed" }).toArray();
 
-        let totalDifference = 0;
-        for (const inProgressOrder of inProgressOrders) {
-            const completedOrder = completedOrders.find(completedOrder => completedOrder.order_id === inProgressOrder.order_id);
-            if (completedOrder) {
-                const inProgressDate = new Date(`${inProgressOrder.order_date}T${inProgressOrder.order_time}`);
-                const completedDate = new Date(`${completedOrder.order_date}T${completedOrder.order_time}`);
-                const timeDifferenceMs = completedDate - inProgressDate;
-                totalDifference += timeDifferenceMs;
-            }
+        let totalSeconds = 0;
+        for (const completedOrder of completedOrders) {
+            
+                const completedTime = `${completedOrder.order_time}`;
+                const completedTime1 = moment.duration(completedTime).asSeconds();
+                totalSeconds += completedTime1;
+                console.log(totalSeconds)
+            
         }
 
         const count = completedOrders.length;
-        const averageTimeMs = totalDifference / count;
-        const averageTimeMin = averageTimeMs / (1000 * 60);
+        const averageSeconds = totalSeconds / count;
+        // const averageTimeMs = totalDifference / count;
+        // const averageTimeMin = averageTimeMs / (1000 * 60);
+        // convert the total duration back to the format HH:mm:ss
+        const hours = Math.floor(averageSeconds / 3600);
+        const minutes = Math.floor((averageSeconds % 3600) / 60);
+        const seconds = Math.floor(averageSeconds % 60);
+        const formattedDuration = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
-        res.status(200).send({ averageTimeMin });
+        console.log("here")
+        console.log(formattedDuration)
+        res.status(200).send({ formattedDuration });
     } catch (error) {
         console.error(error);
         res.status(500).send({ error: 'Internal Server Error' });

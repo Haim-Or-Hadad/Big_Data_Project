@@ -5,8 +5,7 @@ const handleStartTimeArray = async (req, res, client) => {
         const query = { status: "completed" };
         const orders = await collection.find(query).toArray();
         console.log(orders)
-        const startTimes = orders.map((order) => order.end_time);
-        console.log(startTimes);
+        const startTimes = orders.map((order) => order.order_time);
         res.status(200).send({ startTimes });
     } catch (error) {
         console.error(error);
