@@ -62,6 +62,9 @@ export const SearchTable = (props) => {
                   Brunch Id
                 </TableCell>
                 <TableCell>
+                  Brunch Name
+                </TableCell>
+                <TableCell>
                   Start Time
                 </TableCell>
                 <TableCell>
@@ -113,16 +116,19 @@ export const SearchTable = (props) => {
                       {order.branch_id}
                     </TableCell>
                     <TableCell>
+                    {order.branch_name}
+                    </TableCell>
+                    <TableCell>
                     {order.start_time}
                     </TableCell>
                     <TableCell>
-                    {order.end_time}
+                    {order.order_time}
                     </TableCell>
                     <TableCell>
                       {order.status}
                     </TableCell>
                     <TableCell>
-                    {order.branch_name}
+                    {order.topping.join(', ')}
                     </TableCell>
                   </TableRow>
                 );

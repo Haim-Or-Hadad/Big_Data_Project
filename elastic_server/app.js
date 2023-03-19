@@ -6,7 +6,7 @@ const app = express();
 const PORT = 3313;
 app.use(cors());
 
-const client = new Client({ node: 'http://192.168.1.55:9200' }); 
+const client = new Client({ node: 'http://192.168.181.128:9200' }); 
 
 app.get('/orders', async (req, res) => {
     const { start, end } = req.query; // Assuming the start and end date are passed as query parameters

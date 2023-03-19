@@ -15,9 +15,8 @@ import {
   Typography
 } from '@mui/material';
 import { Scrollbar } from 'src/components/scrollbar';
-import { getInitials } from 'src/utils/get-initials';
-import { useState } from 'react';
-const Toppings =["Pepperoni", "Mushrooms", "Onions", "Sausage", "Bacon", "Extra Cheese"]
+import { useEffect, useState } from 'react';
+const Toppings =["Pepperoni", "Mushrooms", "Onions", "Sausage", "Bacon", "Extra Cheese","Olives","Tuna","Pinneapple"]
 export const BigMLTable = (props) => {
   const {
     count = 0,
@@ -34,7 +33,10 @@ export const BigMLTable = (props) => {
   } = props;
   const selectedSome = (selected.length > 0) && (selected.length < items.length);
   const selectedAll = (items.length > 0) && (selected.length === items.length);
-
+  const [generatedPairs, setGeneratedPairs] = useState(new Set());
+  useEffect(() => {
+    setGeneratedPairs(new Set([...generatedPairs]));
+  }, [items]);  
   return (
     <Card>
       <Scrollbar>
@@ -63,19 +65,24 @@ export const BigMLTable = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {items.map((data) => {
-                const antecedentIndex = Math.floor(Math.random() * Toppings.length);
-                const antecedent = Toppings[antecedentIndex];
-                
-                // Generate a random index value for data.consequent
-                let consequentIndex = Math.floor(Math.random() * Toppings.length);
-                let consequent = Toppings[consequentIndex];
-                
-                // Keep generating a new random index value for consequent until it is not the same as antecedent
-                while (consequentIndex === antecedentIndex) {
-                  consequentIndex = Math.floor(Math.random() * Toppings.length);
-                  consequent = Toppings[consequentIndex];
-                }
+
+            {items.map((data) => {
+              let antecedentIndex, consequentIndex, antecedent, consequent;
+
+              // Generate a new pair until it is not already generated and antecedent is not the same as consequent
+              do {
+                // Generate a random index value for antecedent
+                antecedentIndex = Math.floor(Math.random() * Toppings.length);
+                antecedent = Toppings[antecedentIndex];
+
+                // Generate a random index value for consequent
+                consequentIndex = Math.floor(Math.random() * Toppings.length);
+                consequent = Toppings[consequentIndex];
+              } while (
+                generatedPairs.has(`${antecedent}-${consequent}`) ||
+                antecedent === consequent
+              );
+
                 let id = Math.random().toString(36).substring(7);
                 const isSelected = selected.includes(id);
                 return (
