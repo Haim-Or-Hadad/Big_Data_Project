@@ -146,7 +146,7 @@ def simulate_pizza_order():
             'branch_name':order.branch_name,
             'topping': order.toppings ,
             'order_date' : date,
-            'start_time ' : time_only_str,
+            'start_time' : time_only_str,
             'order_time' : end_time_str, 
             'status': order.status 
             }

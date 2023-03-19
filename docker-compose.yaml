@@ -118,6 +118,16 @@ services:
     networks:
       - localnet
 
+  bigml_server:
+    build:
+      context: ./bigml_server/
+      dockerfile: dockerfile
+    ports: 
+      - "3100:3100"
+    container_name: bigml_server
+    networks:
+      - localnet
+
   dashboard:
     build:
       context: ./Pizza-Dashbord/
