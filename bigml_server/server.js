@@ -4,6 +4,8 @@ const BigML = require('bigml-node');
 const bigml = require('bigml');
 const { MongoClient } = require('mongodb');
 
+const fs = require('fs');
+const stringify = require('csv-stringify');
 
 const app = express();
 app.use(cors());
@@ -13,7 +15,7 @@ app.listen(3100,()=>{
 })
 
 // ////////////////////mongoDB////////////////////////
-// const uri = "mongodb+srv://HAIM:261197@pizzacluster.8pd4dbj.mongodb.net/?retryWrites=true&w=majority";
+const uri = "mongodb+srv://HAIM:261197@pizzacluster.8pd4dbj.mongodb.net/?retryWrites=true&w=majority";
 // const client = new MongoClient(uri);
 
 
@@ -27,75 +29,52 @@ const sourceFilePath = './data/dataset.csv';
 const bigmlClient = new BigML(BIGML_USERNAME, BIGML_API_KEY);
 var connection = new bigml.BigML('haimor1123','c3bb7048d9838e550affc1ea0b47b25e2d69f9f6') 
 
+// app.get('/createdataset', async (req, res) => {
+//   const client = new MongoClient(uri);
+//   try {
+//     await client.connect();
+//     const db = client.db('pizza');
+//     const collection = db.collection('orders');
 
-async function main() {
-  // Connect to MongoDB
-  await client.connect();
-  const db = client.db('pizza');
-  const collection = db.collection('orders');
+//     const query = { status: "completed" };
+//     const orders = await collection.find(query).toArray();
+//     //Create dataset
+//     const toppingsSet = new Set();
+//     const ordersMap = {};
+//     orders.forEach(order => {
+//       const toppings = order.topping;
+//       toppings.forEach(topping => toppingsSet.add(topping));
+//       ordersMap[order.order_id] = {};
+//       toppingsSet.forEach(t => ordersMap[order.order_id][t] = 0);
+//       toppings.forEach(topping => ordersMap[order.order_id][topping] = 1);
+//     });
+//     console.log(toppingsSet)    
+    // const dataset = [];
+    // dataset.push(`order_id,${[...toppingsSet].join(',')}`);
+    // for (const [orderId, toppings] of Object.entries(ordersMap)) {
+    //   const row = [];
+    //   row.push(orderId);
+    //   for (const [topping, value] of Object.entries(toppings)) {
+    //     row.push(value);
+    //   }
+    //   dataset.push(row.join(','));
+    // }
 
-  // Retrieve completed orders with toppings from MongoDB
-  const orders = await collection.find({ status: 'completed' }).toArray();
-  const toppings = orders.map((order) => order.topping);
-// Define the data and columns
-const columns = [
-  "order_id",
-  "pepperoni",
-  "mushrooms",
-  "olives",
-  "onions",
-  "sausage",
-  "bacon",
-  "peppers",
-];
+    // console.log(dataset);
+    //res.send(dataset);
+//   } catch (err) {
+//     console.error(err);
+//   } finally {
+//     await client.close();
+//   }
+// });
+  
 
 
-data = [] 
 
-  //Loop through each order and count the toppings
-  for (let i = 0; i < toppings.length; i++) {
-    topping_dict = {
-      'order_id' : 0,
-      'Pepperoni': 0,
-      'Mushrooms': 0,
-      'Olives': 0,
-      'Onions': 0,
-      'Sausage': 0,
-      'Bacon': 0,
-      'Peppers': 0
-  }
-    curr_data = []
-    const order = toppings[i];
-    for (let j = 0; j < order.length; j++) {
-      const topping = order[j];
-        topping_dict[topping] = 1;
-      }
-    for (let key in topping_dict) {
-      if (key == 'order_id'){
-        curr_data.push(i);
-      }
-      else{
-      curr_data.push(topping_dict[key]);
-    }
-  }
-    
-    data.push(curr_data)
-    }
-    for (let i = 0; i < data.length; i++) {
-      let list = data[i];
-      if (list.length !== 8) {
-        if (list.length === 9) {
-          list.pop();
-        } else {
-          while (list.length < 8) {
-            list.push(0);
-          }
-        }
-      }
-    }
 
-  }
- 
+
+
 
 
   app.get('/predict', (req, res) => {

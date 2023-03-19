@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "node-pandas": "^1.0.5"
+  }
+}
