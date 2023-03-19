@@ -127,6 +127,25 @@ services:
     container_name: bigml_server
     networks:
       - localnet
+  
+  # redis_server:
+  #   build:
+  #     context: ./redis/
+  #     dockerfile: dockerfile
+  #   ports: 
+  #     - "3001:3001"
+  #   container_name: redis_server
+  #   networks:
+  #     - localnet
+
+  redis-stack-server:
+    container_name: redis-stack-server
+    image: redis/redis-stack-server:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - localnet
+
 
   dashboard:
     build:
