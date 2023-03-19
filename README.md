@@ -5,16 +5,17 @@ In addition, there is a dashboard that sends requests to create association rule
 all the gemeral data saved in redis server .
 all the project running with one click with docker-compose!.
 
-<!-- ![Screenshot from 2023-03-18 10-21-55](https://user-images.githubusercontent.com/93033782/226094317-5f5b19d4-e763-4a39-9386-daa7f02fa9cc.png)width="340"> <br/> -->
+
+<img src="https://user-images.githubusercontent.com/93033782/226176787-0326927d-a29e-424a-af8f-5170a17d1cfc.png" width="75%"> </br>
 
 ## How To Run 
 1. clone the project. 
-2. navigate in terminal to root folder .
-3.run the command docker-compose up -d.
+2. navigate in terminal to root folder.
+3. run the command docker-compose up -d.
 4. all the containers need to run , check with docker ps.
 5.start the three connectors.
-6. the commnds are below . 
-7. go to dashboard in localhost:3000 and that's it !
+6. the commnds are below. 
+7. go to dashboard in localhost:3000 and that's it!.
 
 ## prerequisets:
 ### windows
