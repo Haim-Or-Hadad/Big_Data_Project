@@ -1,19 +1,17 @@
-import { useCallback, useMemo, useState,useEffect } from 'react';
+import { useCallback, useMemo, useState} from 'react';
 import Head from 'next/head';
-import { subDays, subHours } from 'date-fns';
-import { Box, Button, Container, Stack, SvgIcon, Typography } from '@mui/material';
+import { Box, Button, Container, Stack, Typography } from '@mui/material';
 import { useSelection } from 'src/hooks/use-selection';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { SearchTable } from 'src/sections/search/search-table';
 import { CustomersSearch } from 'src/sections/search/customers-search';
 import { applyPagination } from 'src/utils/apply-pagination';
 
-const now = new Date();
 
 const data = [
 ];
 
-const useCustomers = (page, rowsPerPage) => {
+const useSearch = (page, rowsPerPage) => {
   return useMemo(
     () => {
       return applyPagination(data, page, rowsPerPage);
@@ -22,12 +20,12 @@ const useCustomers = (page, rowsPerPage) => {
   );
 };
 
-const useCustomerIds = (customers) => {
+const useSearchIds = (data) => {
   return useMemo(
     () => {
-      return customers.map((customer) => customer.id);
+      return data.map((data) => data.id);
     },
-    [customers]
+    [data]
   );
 };
 
@@ -35,9 +33,9 @@ const Page = () => {
   const [page, setPage] = useState(0);
   const [searchQuery, setSearchQuery] = useState({start: '',end:''});
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const customers = useCustomers(page, rowsPerPage);
-  const customersIds = useCustomerIds(customers);
-  const customersSelection = useSelection(customersIds);
+  const searchData = useSearch(page, rowsPerPage);
+  const SearchIds = useSearchIds(searchData);
+  const SearchSelection = useSelection(SearchIds);
   const [orders, setOrders] = useState([]);
 
 
@@ -100,15 +98,15 @@ const Page = () => {
             <SearchTable
               count={data.length}
               items={orders}
-              onDeselectAll={customersSelection.handleDeselectAll}
-              onDeselectOne={customersSelection.handleDeselectOne}
+              onDeselectAll={SearchSelection.handleDeselectAll}
+              onDeselectOne={SearchSelection.handleDeselectOne}
               onPageChange={handlePageChange}
               onRowsPerPageChange={handleRowsPerPageChange}
-              onSelectAll={customersSelection.handleSelectAll}
-              onSelectOne={customersSelection.handleSelectOne}
+              onSelectAll={SearchSelection.handleSelectAll}
+              onSelectOne={SearchSelection.handleSelectOne}
               page={page}
               rowsPerPage={rowsPerPage}
-              selected={customersSelection.selected}
+              selected={SearchSelection.selected}
             />
           </Stack>
         </Container>

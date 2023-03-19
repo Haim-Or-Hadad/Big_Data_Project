@@ -1,14 +1,9 @@
 import Head from 'next/head';
-import ArrowUpOnSquareIcon from '@heroicons/react/24/solid/ArrowUpOnSquareIcon';
-import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
-import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
 import {
   Box,
   Button,
   Container,
-  Pagination,
   Stack,
-  SvgIcon,
   Typography,
   Unstable_Grid2 as Grid
 } from '@mui/material';
@@ -23,7 +18,7 @@ const now = new Date();
 const data = [
 ];
 
-const useCustomers = (page, rowsPerPage) => {
+const useSearch = (page, rowsPerPage) => {
   return useMemo(
     () => {
       return applyPagination(data, page, rowsPerPage);
@@ -32,21 +27,21 @@ const useCustomers = (page, rowsPerPage) => {
   );
 };
 
-const useCustomerIds = (customers) => {
+const useSearchIds = (data) => {
   return useMemo(
     () => {
-      return customers.map((customer) => customer.id);
+      return data.map((data) => data.id);
     },
-    [customers]
+    [data]
   );
 };
 
 const Page = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const customers = useCustomers(page, rowsPerPage);
-  const customersIds = useCustomerIds(customers);
-  const customersSelection = useSelection(customersIds);
+  const searchData = useSearch(page, rowsPerPage);
+  const SearchIds = useSearchIds(searchData);
+  const SearchSelection = useSelection(SearchIds);
   const [ml, setMl] = useState([]);
 
 
@@ -109,15 +104,15 @@ const Page = () => {
             <BigMLTable
               count={data.length}
               items={ml}
-              onDeselectAll={customersSelection.handleDeselectAll}
-              onDeselectOne={customersSelection.handleDeselectOne}
+              onDeselectAll={SearchSelection.handleDeselectAll}
+              onDeselectOne={SearchSelection.handleDeselectOne}
               onPageChange={handlePageChange}
               onRowsPerPageChange={handleRowsPerPageChange}
-              onSelectAll={customersSelection.handleSelectAll}
-              onSelectOne={customersSelection.handleSelectOne}
+              onSelectAll={SearchSelection.handleSelectAll}
+              onSelectOne={SearchSelection.handleSelectOne}
               page={page}
               rowsPerPage={rowsPerPage}
-              selected={customersSelection.selected}
+              selected={SearchSelection.selected}
             />
           </Stack>
         </Container>
