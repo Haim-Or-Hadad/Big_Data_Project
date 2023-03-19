@@ -8,6 +8,8 @@ all the project running with one click with docker-compose!.
 
 <img src="https://user-images.githubusercontent.com/93033782/226176787-0326927d-a29e-424a-af8f-5170a17d1cfc.png" width="75%"> </br>
 
+<img src="https://user-images.githubusercontent.com/93033782/226194833-3feb86b7-7d6e-42db-b7af-2d17c17f11b0.png" width="75%"> </br>
+
 ## How To Run 
 1. clone the project. 
 2. navigate in terminal to root folder.
