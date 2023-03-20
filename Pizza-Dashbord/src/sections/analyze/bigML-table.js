@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 import { Scrollbar } from 'src/components/scrollbar';
 import { useEffect, useState } from 'react';
-const Toppings =["Pepperoni", "Mushrooms", "Onions", "Sausage", "Bacon", "Extra Cheese","Olives","Tuna","Pinneapple"]
+const Toppings =["Pepperoni", "Mushrooms", "Onions", "Sausage", "Bacon", "Extra Cheese","Olives"]
 export const BigMLTable = (props) => {
   const {
     count = 0,

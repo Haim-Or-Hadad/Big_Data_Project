@@ -22,6 +22,7 @@ const uri = "mongodb+srv://HAIM:261197@pizzacluster.8pd4dbj.mongodb.net/?retryWr
 ////////////////////bigML//////////////////////
 const BIGML_USERNAME = 'haimor1123';
 const BIGML_API_KEY = 'c3bb7048d9838e550affc1ea0b47b25e2d69f9f6';
+const sourceFileePath = './data/dataset3.csv';
 const sourceFilePath = './data/dataset.csv';
 
 
@@ -56,7 +57,7 @@ app.get('/createdataset', async (req, res) => {
         });
         dataset.push(row.join(','));
       });
-      fs.writeFileSync(sourceFilePath, dataset.join('\n'));
+      fs.writeFileSync(sourceFileePath, dataset.join('\n'));
       console.log(dataset.length)
       res.send("Dataset Created");
     } catch (err) {
@@ -66,49 +67,6 @@ app.get('/createdataset', async (req, res) => {
     }
   
 });
-
-
-// app.get('/createdataset', async (req, res) => {
-//   const client = new MongoClient(uri);
-//   try {
-//     await client.connect();
-//     const db = client.db('pizza');
-//     const collection = db.collection('orders');
-
-//     const query = { status: "completed" };
-//     const orders = await collection.find(query).toArray();
-//     //Create dataset
-//     const toppingsSet = new Set();
-//     const ordersMap = {};
-//     orders.forEach(order => {
-//       const toppings = order.topping;
-//       toppings.forEach(topping => toppingsSet.add(topping));
-//       ordersMap[order.order_id] = {};
-//       toppingsSet.forEach(t => ordersMap[order.order_id][t] = 0);
-//       toppings.forEach(topping => ordersMap[order.order_id][topping] = 1);
-//     });
-//     console.log(toppingsSet)    
-//     const dataset = [];
-//     dataset.push(`order_id,${[...toppingsSet].join(',')}`);
-//     for (const [orderId, toppings] of Object.entries(ordersMap)) {
-//       const row = [];
-//       row.push(orderId);
-//       for (const [topping, value] of Object.entries(toppings)) {
-//         row.push(value);
-//       }
-//       dataset.push(row.join(','));
-//     }
-//       fs.writeFileSync(sourceFilePath, dataset.join('\n'));
-
-//     console.log(dataset);
-//       res.send("Dataset Created");
-//   } catch (err) {
-//     console.error(err);
-//   } finally {
-//     await client.close();
-//   }
-// });
-  
 
 
 
@@ -127,7 +85,6 @@ app.get('/createdataset', async (req, res) => {
                 const model = new bigml.Model(connection);
                 const results = {};        // save the result to export to json file
                 results.data = [];
-                console.log(associationInfo)
                 model.get(associationInfo.resource, true, 'only_model=true;limit=-1', function (error, modelInfo) {
                   if (!error && modelInfo) {
                     for (let i = 0; i < modelInfo.object.associations.rules.length; i++) {

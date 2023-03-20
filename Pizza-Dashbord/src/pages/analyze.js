@@ -5,6 +5,7 @@ import {
   Container,
   Stack,
   Typography,
+  SvgIcon,
   Unstable_Grid2 as Grid
 } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
@@ -12,6 +13,8 @@ import { BigMLTable } from 'src/sections/analyze/bigML-table';
 import { useCallback, useMemo, useState,useEffect } from 'react';
 import { applyPagination } from 'src/utils/apply-pagination';
 import { useSelection } from 'src/hooks/use-selection';
+import ArrowUpOnSquareIcon from '@heroicons/react/24/solid/ArrowUpOnSquareIcon';
+import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
 
 const now = new Date();
 
@@ -65,6 +68,12 @@ const Page = () => {
       .then(data => setMl(data)).then(console.log(ml))
       .catch(error => console.error(error));
   });
+  const handleImport = useCallback(() => {
+    fetch(`http://localhost:3100/createdataset`)
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error(error));
+  });
 
 
 
@@ -94,6 +103,17 @@ const Page = () => {
                 Analyze Orders
                 </Typography>
               </Stack>
+              <Button
+                  onClick={handleImport}
+                  color="inherit"
+                  startIcon={(
+                    <SvgIcon fontSize="small">
+                      <ArrowUpOnSquareIcon />
+                    </SvgIcon>
+                  )}
+                >
+                  Import
+                </Button>
             </Stack>
             <Button
                 onClick={handleAnalyze}
