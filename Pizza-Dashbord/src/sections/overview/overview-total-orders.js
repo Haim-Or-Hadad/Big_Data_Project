@@ -13,7 +13,7 @@ export const OverviewTotalOrders = (props) => {
     fetch(`http://localhost:3005/count`)
       .then(response => response.json())
       .then(data => {
-        setMongoValue(Number(data.count));
+        setMongoValue(Number(Math.round(data.count/2)));
         // Send the retrieved data to localhost:3001
         fetch('http://localhost:3001/set', {
           method: 'POST',

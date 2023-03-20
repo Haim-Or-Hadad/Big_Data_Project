@@ -32,7 +32,7 @@ const useSearchIds = (data) => {
 const Page = () => {
   const [page, setPage] = useState(0);
   const [searchQuery, setSearchQuery] = useState({start: '',end:''});
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(100);
   const searchData = useSearch(page, rowsPerPage);
   const SearchIds = useSearchIds(searchData);
   const SearchSelection = useSelection(SearchIds);

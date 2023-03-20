@@ -124,8 +124,8 @@ export const BigMLTable = (props) => {
         onPageChange={onPageChange}
         onRowsPerPageChange={onRowsPerPageChange}
         page={page}
-        rowsPerPage={rowsPerPage}
-        rowsPerPageOptions={[5, 10, 25]}
+        rowsPerPage={100}
+        rowsPerPageOptions={[100, 150, 250]}
       />
     </Card>
   );
