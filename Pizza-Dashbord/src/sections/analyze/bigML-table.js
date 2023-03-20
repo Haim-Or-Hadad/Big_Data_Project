@@ -68,21 +68,15 @@ export const BigMLTable = (props) => {
 
             {items.map((data) => {
               let antecedentIndex, consequentIndex, antecedent, consequent;
-
-              // Generate a new pair until it is not already generated and antecedent is not the same as consequent
               do {
-                // Generate a random index value for antecedent
                 antecedentIndex = Math.floor(Math.random() * Toppings.length);
                 antecedent = Toppings[antecedentIndex];
-
-                // Generate a random index value for consequent
                 consequentIndex = Math.floor(Math.random() * Toppings.length);
                 consequent = Toppings[consequentIndex];
               } while (
                 generatedPairs.has(`${antecedent}-${consequent}`) ||
                 antecedent === consequent
               );
-
                 let id = Math.random().toString(36).substring(7);
                 const isSelected = selected.includes(id);
                 return (
