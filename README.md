@@ -133,7 +133,9 @@ curl -X POST \
 ' \
 http://connect:8083/connectors -w "\n"
 
-```
+
+### to start the branches connector
+```bash
 curl -X POST \
 -H "Content-Type: application/json" \
 --data '
@@ -149,7 +151,7 @@ curl -X POST \
 }
 ' \
 http://connect:8083/connectors -w "\n"
-
+```
 
 ### to start ElasticSearch connector
 ```bash
