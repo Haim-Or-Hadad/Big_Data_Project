@@ -67,13 +67,9 @@ kafka-console-consumer --topic <TOPIC_NAME> --from-beginning --bootstrap-server 
 ### elastic-search 
 ```bash
 http://localhost:9200/ - Elasticsearch
-
+http://localhost:9200/shared/_search?pretty&size=100 # list from browser
 ```
  
-### elastic query to list all messages pushed to the sink 
-```bash
-http://localhost:9200/shared/_search?pretty
-```
 
 ### cli commmands to connectors
 ```bash
@@ -81,6 +77,24 @@ curl -X GET http://connect:8083/connectors # list all connectors
 curl -X DELETE http://connect:8083/connectors/mongo-sink # delete a specific connector
 ```
 
+### cli commmands to elastic search
+```bash
+curl -XGET 'http://localhost:9200/{shared}/_count?pretty=true' # count all documents
+curl -XGET 'http://localhost:9200/{shared}/_search?size=10000&pretty' # elastic query to list all messages pushed to the sink
+curl -XGET 'http://localhost:9200/shared/_search?pretty&size=100' # list 1000 messages
+curl -XGET 'http://localhost:9200/{shared}/_search?pretty=true' -H 'Content-Type: application/json' -d'
+{
+  "query": {
+    "match": {
+      "order_date": "2023-03-24"
+    }
+  },
+  "sort": [
+    { "_id": "asc" }
+  ],
+  "size": 100
+}' # return the search results 
+```
 
 ### build and run the mongo_server
 ```bash
