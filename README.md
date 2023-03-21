@@ -123,7 +123,7 @@ curl -X POST \
 {"name": "mongo-sink",
 "config": {
 "connector.class":"com.mongodb.kafka.connect.MongoSinkConnector",
-"connection.uri":"mongodb+srv://HAIM:261197@pizzacluster.8pd4dbj.mongodb.net/?retryWrites=true&w=majority",
+"connection.uri":"mongodb+srv://<USERNAME>:<PASSWORD>@pizzacluster.8pd4dbj.mongodb.net/?retryWrites=true&w=majority",
 "database":"pizza",
 "collection":"orders",
 "topics":"shared",
@@ -142,7 +142,7 @@ curl -X POST \
 {"name": "mongo-sink-branches",
 "config": {
 "connector.class":"com.mongodb.kafka.connect.MongoSinkConnector",
-"connection.uri":"mongodb+srv://HAIM:261197@pizzacluster.8pd4dbj.mongodb.net/?retryWrites=true&w=majority",
+"connection.uri":"mongodb+srv://<USERNAME>:<PASSWORD>@pizzacluster.8pd4dbj.mongodb.net/?retryWrites=true&w=majority",
 "database":"pizza",
 "collection":"branches",
 "topics":"branches",
