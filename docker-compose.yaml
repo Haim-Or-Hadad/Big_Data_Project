@@ -40,6 +40,7 @@ services:
       dockerfile: connect.Dockerfile
     ports:
       - "35000:35000"
+      
     hostname: connect
     container_name: connect
     depends_on:
