@@ -20,7 +20,7 @@ export const OverviewTotalOrders = (props) => {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ key: 'TotalOrders', value: mongoValue })
+          body: JSON.stringify({ key: 'TotalOrders', value: Number(Math.round(data.count/2)) })
         });
       })
       .catch(error => console.error(error));

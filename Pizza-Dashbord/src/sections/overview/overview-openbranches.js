@@ -15,7 +15,7 @@ export const OpenBranches = (props) => {
       .then(response => response.json())
       .then(data => {
         setMongoValue(Number(data.count));
-        
+        setMongoValue(23);
         // Send the retrieved data to localhost:3001
         fetch('http://localhost:3001/set', {
           method: 'POST',
